@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-<meta charset="UTF-8">
+<!-- saved from url=(0050)https://tty5200707-code.github.io/my-expense-cash/ -->
+<html lang="zh-TW"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>智慧生活記帳本 (現金版)</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="./錢包生活記帳本 (現金版)_files/chart.js.下載"></script>
 <style>
   :root {
     --primary: #4f46e5; --success: #10b981; --danger: #ef4444;
@@ -61,56 +61,60 @@
   <header>
     <h1>智慧生活記帳本</h1>
     <div class="header-actions">
-      <div id="loading-bar">&#9203; 同步處理中...</div>
-      <button class="btn btn-outline" onclick="loadCloudData()">&#128260; 重新整理</button>
-      <button class="btn btn-success" onclick="exportToCSV()">&#128228; 匯出 CSV</button>
+      <div id="loading-bar" style="display: none;">⏳ 同步處理中...</div>
+      <button class="btn btn-outline" onclick="loadCloudData()">🔄 重新整理</button>
+      <button class="btn btn-success" onclick="exportToCSV()">📤 匯出 CSV</button>
     </div>
   </header>
 
   <div class="dashboard-grid">
     <div class="card stat-pocket">
       <div class="stat-label">現有零用金餘額</div>
-      <div class="stat-val" id="pocket-balance" style="color: var(--success);">$0</div>
+      <div class="stat-val" id="pocket-balance" style="color: var(--success);">$4,770</div>
     </div>
-    <div class="card"><div class="stat-label">&#128197; 本日支出</div><div class="stat-val" id="today-expense">$0</div></div>
-    <div class="card"><div class="stat-label">&#128197; 本週支出</div><div class="stat-val" id="week-expense">$0</div></div>
-    <div class="card"><div class="stat-label">&#128197; 本月支出</div><div class="stat-val" id="month-expense">$0</div></div>
+    <div class="card"><div class="stat-label">📅 本日支出</div><div class="stat-val" id="today-expense">$230</div></div>
+    <div class="card"><div class="stat-label">📅 本週支出</div><div class="stat-val" id="week-expense">$230</div></div>
+    <div class="card"><div class="stat-label">📅 本月支出</div><div class="stat-val" id="month-expense">$230</div></div>
   </div>
 
   <div class="card" style="margin-bottom: 20px;">
-    <h3 style="font-size: 0.95rem; margin-bottom: 10px;">&#129375; 本月分類支出佔比</h3>
-    <div class="chart-container"><canvas id="categoryChart"></canvas></div>
+    <h3 style="font-size: 0.95rem; margin-bottom: 10px;">🥟 本月分類支出佔比</h3>
+    <div class="chart-container"><canvas id="categoryChart" width="1270" height="325" style="display: block; box-sizing: border-box; height: 260px; width: 1016.4px;"></canvas></div>
   </div>
 
   <div class="forms-grid">
     <div class="card">
-      <h3 style="font-size: 0.95rem; margin-bottom: 12px; color: var(--primary);">&#65291; 新增消費支出（現金）</h3>
+      <h3 style="font-size: 0.95rem; margin-bottom: 12px; color: var(--primary);">＋ 新增消費支出（現金）</h3>
       <form id="expense-form">
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
           <div class="form-group">
             <label>消費日期</label>
-            <input type="date" id="date" required>
+            <input type="date" id="date" required="">
           </div>
           <div class="form-group">
             <label>支出分類</label>
-            <select id="category" required>
+            <select id="category" required="">
               <option value="飲食">飲食</option>
               <option value="小朋友花費">小朋友花費</option>
               <option value="網購">網購</option>
               <option value="生活用品">生活用品</option>
+              <option value="人情往來">人情往來</option>
+              <option value="健康醫療">健康醫療</option>
+              <option value="娛樂旅遊">娛樂旅遊</option>
+              <option value="其他">其他</option>
             </select>
           </div>
         </div>
         <div class="form-group">
           <label>消費金額 (NTD)</label>
-          <input type="number" id="amount" placeholder="金額" min="1" step="any" required>
+          <input type="number" id="amount" placeholder="金額" min="1" step="any" required="">
         </div>
         <div class="form-group">
           <label>項目</label>
-          <input type="text" id="item" placeholder="例如：午餐、尿布、衛生紙" required>
+          <input type="text" id="item" placeholder="例如：午餐、尿布、衛生紙" required="">
         </div>
         <div class="form-group">
-          <label>&#128206; 上傳收據／發票明細照片</label>
+          <label>📎 上傳收據／發票明細照片</label>
           <input type="file" id="receipt" accept="image/*">
         </div>
         <button type="submit" id="btn-submit-expense" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 10px;">確認儲存支出</button>
@@ -118,21 +122,27 @@
     </div>
 
     <div class="card">
-      <h3 style="font-size: 0.95rem; margin-bottom: 12px; color: var(--success);">&#128176; 零用金儲值與提領</h3>
+      <h3 style="font-size: 0.95rem; margin-bottom: 12px; color: var(--success);">💰 零用金儲值與提領</h3>
       <form id="pocket-form">
         <div class="form-group">
           <label>異動日期</label>
-          <input type="date" id="pocket-date" required>
+          <input type="date" id="pocket-date" required="">
         </div>
         <div class="form-group">
           <label>異動金額 (加值請填正數，提領可填負數)</label>
-          <input type="number" id="pocket-amount" placeholder="例如：3000" step="any" required>
+          <input type="number" id="pocket-amount" placeholder="例如：3000" step="any" required="">
         </div>
         <button type="submit" id="btn-submit-pocket" class="btn btn-success" style="width: 100%; justify-content: center; padding: 10px; margin-top: 6px;">確認記錄零用金</button>
       </form>
       <div style="margin-top: 12px;">
         <span style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted);">最近存入/提領明細：</span>
-        <div class="pocket-history" id="pocket-history-list"></div>
+        <div class="pocket-history" id="pocket-history-list"><div class="pocket-item">
+        <span>2026-10-07</span>
+        <span style="display:flex; gap:8px; align-items:center;">
+          <b style="color:var(--success)">+$5,000</b>
+          <button class="btn-del" onclick="deletePocket('muxru2fovdf42')">刪除</button>
+        </span>
+      </div></div>
       </div>
     </div>
   </div>
@@ -154,14 +164,21 @@
         <thead>
           <tr><th>日期</th><th>分類</th><th>項目</th><th>金額</th><th>明細照</th><th>操作</th></tr>
         </thead>
-        <tbody id="expense-tbody"></tbody>
+        <tbody id="expense-tbody"><tr>
+      <td>2026-10-07</td>
+      <td><span class="badge badge-cat">飲食</span></td>
+      <td>早餐</td>
+      <td><b>$230</b></td>
+      <td>-</td>
+      <td><button class="btn-del" onclick="deleteExpense('muxrud82xpmy1')">刪除</button></td>
+    </tr></tbody>
       </table>
     </div>
   </div>
 </div>
 
 <div class="lightbox" id="lightbox" onclick="closeLightbox()">
-  <img id="lightbox-img" src="" alt="明細憑證大圖">
+  <img id="lightbox-img" src="https://tty5200707-code.github.io/my-expense-cash/" alt="明細憑證大圖">
 </div>
 
 <script>
@@ -172,8 +189,8 @@
   const KEY_EXPENSES = "cash_app_expenses";
   const KEY_POCKET = "cash_app_pocket";
 
-  const CATEGORIES = ["飲食", "小朋友花費", "網購", "生活用品"];
-  const CATEGORY_COLORS = ["#f87171", "#60a5fa", "#fbbf24", "#34d399"];
+  const CATEGORIES = ["飲食", "小朋友花費", "網購", "生活用品", "人情往來", "健康醫療", "娛樂旅遊", "其他"];
+  const CATEGORY_COLORS = ["#f87171", "#60a5fa", "#fbbf24", "#34d399", "#f472b6", "#a78bfa", "#fb923c", "#9ca3af"];
 
   function readLocal(key) {
     try { return JSON.parse(localStorage.getItem(key) || "[]"); } catch (e) { return []; }
@@ -472,5 +489,6 @@
 
   loadCloudData();
 </script>
-</body>
-</html>
+
+
+</body></html>
